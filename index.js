@@ -2,5 +2,5 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-cli-back-button-test-helper'
+  name: 'ember-cli-browser-navigation-button-test-helper'
 };
