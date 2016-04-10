@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-browser-navigation-button-test-helper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Test helper to simulate browsers back and forward button in acceptance tests.",
   "directories": {
     "doc": "doc",
