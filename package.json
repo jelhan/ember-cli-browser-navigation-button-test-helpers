@@ -11,7 +11,7 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "https://github.com/jelhan/ember-cli-browser-navigation-button-test-helper",
+  "repository": "https://github.com/jelhan/ember-cli-browser-navigation-button-test-helpers",
   "engines": {
     "node": ">= 0.10.0"
   },
