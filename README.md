@@ -5,7 +5,7 @@ Test helper to simulate browsers back and forward buttons in acceptance tests.
 
 ## Installation
 * `ember install ember-cli-browser-navigation-button-test-helper`
-* Add `import './browser-navigation-buttons';` to `tests/helpers/start-app.js`.
+* Add `import registerBrowserNavigationButtons from './browser-navigation-buttons';` and a call of `registerBrowserNavigationButtons();` before `application.injectTestHelpers();` in `tests/helpers/start-app.js`.
 * Add `backButton`, `forwardButton` and `setupBrowserNavigationButtons` as predef in `tests/.jshintrc`.
 
 ## Quickstart

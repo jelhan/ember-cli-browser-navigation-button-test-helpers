@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
-import './browser-navigation-buttons';
+import registerBrowserNavigationButtons from './browser-navigation-buttons';
 
 export default function startApp(attrs) {
   let application;
@@ -12,6 +12,9 @@ export default function startApp(attrs) {
   Ember.run(() => {
     application = Application.create(attributes);
     application.setupForTesting();
+
+    registerBrowserNavigationButtons();
+
     application.injectTestHelpers();
   });
 

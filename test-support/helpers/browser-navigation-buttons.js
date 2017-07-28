@@ -1,22 +1,22 @@
 import Ember from 'ember';
 
-export default Ember.Test.registerAsyncHelper('backButton', function(app) {
+const backButton = function(app) {
   const history = app.__container__.lookup('service:history');
   Ember.assert('setupBrowserNavigationButtons must be called before `backButton` could be used.', history);
   Ember.run(() => {
     history.goBack();
   });
-});
+};
 
-export default Ember.Test.registerAsyncHelper('forwardButton', function(app) {
+const forwardButton = function(app) {
   const history = app.__container__.lookup('service:history');
   Ember.assert('setupBrowserNavigationButtons must be called before `forwardButton` could be used.', history);
   Ember.run(() => {
     history.goForward();
   });
-});
+};
 
-export default Ember.Test.registerHelper('setupBrowserNavigationButtons', function(app) {
+const setupBrowserNavigationButtons = function(app) {
   const router = app.__container__.lookup('router:main');
   const history = Ember.Service.create({
     addHistory() {
@@ -46,4 +46,10 @@ export default Ember.Test.registerHelper('setupBrowserNavigationButtons', functi
   });
   app.register('service:history', history, { instantiate: false });
   Ember.addObserver(router, 'currentPath', history, 'addHistory');
-});
+};
+
+export default function() {
+  Ember.Test.registerAsyncHelper('backButton', backButton);
+  Ember.Test.registerAsyncHelper('forwardButton', forwardButton);
+  Ember.Test.registerHelper('setupBrowserNavigationButtons', setupBrowserNavigationButtons);
+}
