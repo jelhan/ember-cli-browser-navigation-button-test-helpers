@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
+const pathIsSubstate = function(path) {
+  return /(^|\.|-)(loading|error)$/.test(path);
+};
+
 const backButton = function(app) {
   const history = app.__container__.lookup('service:history');
   Ember.assert('setupBrowserNavigationButtons must be called before `backButton` could be used.', history);
@@ -21,7 +25,9 @@ const setupBrowserNavigationButtons = function(app) {
   const history = Ember.Service.create({
     addHistory() {
       const currentPath = this.router.get('currentPath');
-      this.history.push(currentPath);
+      if (!pathIsSubstate(currentPath)) {
+        this.history.push(currentPath);
+      }
     },
     history: [],
     forward: [],

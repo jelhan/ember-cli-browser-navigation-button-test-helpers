@@ -7,7 +7,7 @@ test('usage', function(assert) {
   setupBrowserNavigationButtons();
 
   visit('/');
-  click('a');
+  click('a.foo');
   andThen(() => {
     assert.equal(currentURL(), '/foo');
     assert.equal(currentPath(), 'foo');
@@ -40,6 +40,21 @@ test('usage', function(assert) {
           });
         });
       });
+    });
+  });
+});
+
+test('handles route substates', function(assert) {
+  setupBrowserNavigationButtons();
+
+  visit('/');
+  click('a.uses-loading-substate');
+  andThen(() => {
+    assert.equal(currentPath(), 'uses-loading-substate');
+
+    backButton();
+    andThen(() => {
+      assert.equal(currentPath(), 'index');
     });
   });
 });

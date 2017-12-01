@@ -9,6 +9,7 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('foo');
   this.route('bar');
+  this.route('uses-loading-substate');
 });
 
 export default Router;
