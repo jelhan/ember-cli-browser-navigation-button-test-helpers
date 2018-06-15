@@ -1,34 +1,34 @@
-import {
-  registerAsyncHelper,
-  registerHelper
-} from '@ember/test';
 import { addObserver } from '@ember/object/observers';
 import Service from '@ember/service';
 import { run } from '@ember/runloop';
 import { assert } from '@ember/debug';
+import { getContext } from '@ember/test-helpers';
 
 const pathIsSubstate = function(path) {
   return /(^|\.|-)(loading|error)$/.test(path);
 };
 
-const backButton = function(app) {
-  const history = app.__container__.lookup('service:history');
+const backButton = function() {
+  let { owner } = getContext();
+  const history = owner.lookup('service:history');
   assert('setupBrowserNavigationButtons must be called before `backButton` could be used.', history);
   run(() => {
     history.goBack();
   });
 };
 
-const forwardButton = function(app) {
-  const history = app.__container__.lookup('service:history');
+const forwardButton = function() {
+  let { owner } = getContext();
+  const history = owner.lookup('service:history');
   assert('setupBrowserNavigationButtons must be called before `forwardButton` could be used.', history);
   run(() => {
     history.goForward();
   });
 };
 
-const setupBrowserNavigationButtons = function(app) {
-  const router = app.__container__.lookup('router:main');
+const setupBrowserNavigationButtons = function() {
+  let { owner } = getContext();
+  const router = owner.lookup('router:main');
   const history = Service.create({
     addHistory() {
       const currentPath = this.router.get('currentPath');
@@ -57,12 +57,12 @@ const setupBrowserNavigationButtons = function(app) {
     },
     router
   });
-  app.register('service:history', history, { instantiate: false });
+  owner.register('service:history', history, { instantiate: false });
   addObserver(router, 'currentPath', history, 'addHistory');
 };
 
-export default function() {
-  registerAsyncHelper('backButton', backButton);
-  registerAsyncHelper('forwardButton', forwardButton);
-  registerHelper('setupBrowserNavigationButtons', setupBrowserNavigationButtons);
+export {
+  backButton,
+  forwardButton,
+  setupBrowserNavigationButtons,
 }
