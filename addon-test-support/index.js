@@ -1,6 +1,5 @@
 import { addObserver } from '@ember/object/observers';
 import Service from '@ember/service';
-import { run } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import { getContext } from '@ember/test-helpers';
 
@@ -8,22 +7,20 @@ const pathIsSubstate = function(path) {
   return /(^|\.|-)(loading|error)$/.test(path);
 };
 
-const backButton = function() {
+const backButton = async function() {
   let { owner } = getContext();
   const history = owner.lookup('service:history');
   assert('setupBrowserNavigationButtons must be called before `backButton` could be used.', history);
-  run(() => {
-    history.goBack();
-  });
+  await history.goBack();
+  return;
 };
 
-const forwardButton = function() {
+const forwardButton = async function() {
   let { owner } = getContext();
   const history = owner.lookup('service:history');
   assert('setupBrowserNavigationButtons must be called before `forwardButton` could be used.', history);
-  run(() => {
-    history.goForward();
-  });
+  await history.goForward();
+  return;
 };
 
 const setupBrowserNavigationButtons = function() {
