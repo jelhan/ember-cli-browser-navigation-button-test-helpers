@@ -1,60 +1,52 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import {
+  click,
+  currentURL,
+  currentPath,
+  visit
+} from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | test helpers');
+module('Acceptance | test helpers', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('usage', function(assert) {
-  setupBrowserNavigationButtons();
+  test('usage', async function(assert) {
+    setupBrowserNavigationButtons();
 
-  visit('/');
-  click('a.foo');
-  andThen(() => {
+    await visit('/');
+    await click('a.foo');
     assert.equal(currentURL(), '/foo');
     assert.equal(currentPath(), 'foo');
 
-    click('a');
-    andThen(() => {
-      assert.equal(currentURL(), '/bar');
-      assert.equal(currentPath(), 'bar');
+    await click('a');
+    assert.equal(currentURL(), '/bar');
+    assert.equal(currentPath(), 'bar');
 
-      backButton();
-      andThen(() => {
-        assert.equal(currentURL(), '/foo', 'url after back button');
-        assert.equal(currentPath(), 'foo', 'path after back button');
+    backButton();
+    assert.equal(currentURL(), '/foo', 'url after back button');
+    assert.equal(currentPath(), 'foo', 'path after back button');
 
-        backButton();
-        andThen(() => {
-          assert.equal(currentURL(), '/', 'url after another back button');
-          assert.equal(currentPath(), 'index', 'path after another back button');
+    backButton();
+    assert.equal(currentURL(), '/', 'url after another back button');
+    assert.equal(currentPath(), 'index', 'path after another back button');
 
-          forwardButton();
-          andThen(() => {
-            assert.equal(currentURL(), '/foo', 'url after forward button');
-            assert.equal(currentPath(), 'foo', 'path after forward button');
+    forwardButton();
+    assert.equal(currentURL(), '/foo', 'url after forward button');
+    assert.equal(currentPath(), 'foo', 'path after forward button');
 
-            forwardButton();
-            andThen(() => {
-              assert.equal(currentURL(), '/bar', 'url after another forward button');
-              assert.equal(currentPath(), 'bar', 'path after another forward button');
-            });
-          });
-        });
-      });
-    });
+    forwardButton();
+    assert.equal(currentURL(), '/bar', 'url after another forward button');
+    assert.equal(currentPath(), 'bar', 'path after another forward button');
   });
-});
 
-test('handles route substates', function(assert) {
-  setupBrowserNavigationButtons();
+  test('handles route substates', async function(assert) {
+    setupBrowserNavigationButtons();
 
-  visit('/');
-  click('a.uses-loading-substate');
-  andThen(() => {
+    await visit('/');
+    await click('a.uses-loading-substate');
     assert.equal(currentPath(), 'uses-loading-substate');
 
     backButton();
-    andThen(() => {
-      assert.equal(currentPath(), 'index');
-    });
+    assert.equal(currentPath(), 'index');
   });
 });
