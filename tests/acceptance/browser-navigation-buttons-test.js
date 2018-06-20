@@ -23,19 +23,19 @@ module('Acceptance | test helpers', function(hooks) {
     assert.equal(currentURL(), '/bar');
     assert.equal(currentRouteName(), 'bar');
 
-    backButton();
+    await backButton();
     assert.equal(currentURL(), '/foo', 'url after back button');
     assert.equal(currentRouteName(), 'foo', 'path after back button');
 
-    backButton();
+    await backButton();
     assert.equal(currentURL(), '/', 'url after another back button');
     assert.equal(currentRouteName(), 'index', 'path after another back button');
 
-    forwardButton();
+    await forwardButton();
     assert.equal(currentURL(), '/foo', 'url after forward button');
     assert.equal(currentRouteName(), 'foo', 'path after forward button');
 
-    forwardButton();
+    await forwardButton();
     assert.equal(currentURL(), '/bar', 'url after another forward button');
     assert.equal(currentRouteName(), 'bar', 'path after another forward button');
   });
@@ -47,7 +47,7 @@ module('Acceptance | test helpers', function(hooks) {
     await click('a.uses-loading-substate');
     assert.equal(currentRouteName(), 'uses-loading-substate');
 
-    backButton();
+    await backButton();
     assert.equal(currentRouteName(), 'index');
   });
 });
