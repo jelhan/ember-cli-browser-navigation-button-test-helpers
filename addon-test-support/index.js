@@ -50,7 +50,7 @@ const setupBrowserNavigationButtons = function() {
     goForward() {
       const nextPage = this.forward.pop();
       assert('backButton must be used atleast one time before forwardButton could be used..', nextPage);
-      this.router.transitionTo(nextPage);
+      return this.router.transitionTo(nextPage);
     },
     router
   });
