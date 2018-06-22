@@ -25,12 +25,12 @@ const forwardButton = async function() {
 
 const setupBrowserNavigationButtons = function() {
   let { owner } = getContext();
-  const router = owner.lookup('router:main');
+  const router = owner.lookup('service:router');
   const history = Service.create({
     addHistory() {
-      const currentPath = this.router.get('currentPath');
-      if (!pathIsSubstate(currentPath)) {
-        this.history.push(currentPath);
+      const currentRoute = this.router.get('currentRouteName');
+      if (!pathIsSubstate(currentRoute)) {
+        this.history.push(currentRoute);
       }
     },
     history: [],
@@ -55,7 +55,7 @@ const setupBrowserNavigationButtons = function() {
     router
   });
   owner.register('service:history', history, { instantiate: false });
-  addObserver(router, 'currentPath', history, 'addHistory');
+  addObserver(router, 'currentRouteName', history, 'addHistory');
 };
 
 export {
