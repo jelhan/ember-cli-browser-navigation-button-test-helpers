@@ -50,4 +50,25 @@ module('Acceptance | test helpers', function(hooks) {
     await backButton();
     assert.equal(currentRouteName(), 'index');
   });
+
+  test('handles dynamic segments', async function(assert) {
+    setupBrowserNavigationButtons();
+
+    await visit('/');
+    await click('a.uses-dynamic-segment');
+    assert.equal(currentURL(), '/dynamic/item-id');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await click('a');
+    assert.equal(currentURL(), '/dynamic/another-item-id');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await backButton();
+    assert.equal(currentURL(), '/dynamic/item-id');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await forwardButton();
+    assert.equal(currentURL(), '/dynamic/another-item-id');
+    assert.equal(currentRouteName(), 'dynamic');
+  });
 });
