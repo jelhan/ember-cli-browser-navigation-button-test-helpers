@@ -50,4 +50,54 @@ module('Acceptance | test helpers', function(hooks) {
     await backButton();
     assert.equal(currentRouteName(), 'index');
   });
+
+  test('handles dynamic segments', async function(assert) {
+    setupBrowserNavigationButtons();
+
+    await visit('/');
+    await click('a.uses-dynamic-segment');
+    assert.equal(currentURL(), '/dynamic/item-id');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await click('a.uses-id-only');
+    assert.equal(currentURL(), '/dynamic/another-item-id');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await backButton();
+    assert.equal(currentURL(), '/dynamic/item-id');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await forwardButton();
+    assert.equal(currentURL(), '/dynamic/another-item-id');
+    assert.equal(currentRouteName(), 'dynamic');
+  });
+
+  test('handle query string parameters', async function(assert) {
+    setupBrowserNavigationButtons();
+
+    await visit('/');
+    await click('a.uses-query-params');
+    assert.equal(currentURL(), '/dynamic/yet-another-item-id?a=1&b=2&c=3');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await click('a.uses-id-and-query-params');
+    assert.equal(currentURL(), '/dynamic/a-different-item-id?a=9&b=8&c=7');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await click('a.uses-id-only');
+    assert.equal(currentURL(), '/dynamic/another-item-id');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await backButton();
+    assert.equal(currentURL(), '/dynamic/a-different-item-id?a=9&b=8&c=7');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await backButton();
+    assert.equal(currentURL(), '/dynamic/yet-another-item-id?a=1&b=2&c=3');
+    assert.equal(currentRouteName(), 'dynamic');
+
+    await backButton();
+    assert.equal(currentURL(), '/');
+    assert.equal(currentRouteName(), 'index');
+  });
 });

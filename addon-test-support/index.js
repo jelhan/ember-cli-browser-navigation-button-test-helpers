@@ -3,10 +3,6 @@ import Service from '@ember/service';
 import { assert } from '@ember/debug';
 import { getContext, settled } from '@ember/test-helpers';
 
-const pathIsSubstate = function(path) {
-  return /(^|\.|-)(loading|error)$/.test(path);
-};
-
 const backButton = async function() {
   let { owner } = getContext();
   const history = owner.lookup('service:history');
@@ -30,34 +26,31 @@ const setupBrowserNavigationButtons = function() {
   const router = owner.lookup('service:router');
   const history = Service.create({
     addHistory() {
-      const currentRoute = this.router.get('currentRouteName');
-      if (!pathIsSubstate(currentRoute)) {
-        this.history.push(currentRoute);
-      }
+      const currentURL = this.router.get('currentURL');
+      this.history.push(currentURL);
     },
     history: [],
     forward: [],
     goBack() {
       // last element in router.history is current page
       // remove it from history and apply to forward list
-      this.forward.push(
-        this.history.pop()
-      );
+      const currentURL = this.history.pop();
+      this.forward.push(currentURL);
       // get the page before is our target
       // remove that one also, since it's readded by transition
-      const lastPage = this.history.pop();
-      assert('A transition must be recognized after `setupBrowserNavigationButtons` was called.', lastPage);
-      return this.router.transitionTo(lastPage);
+      const previousURL = this.history.pop();
+      assert('There were no URLs in the browser history. Make sure a transition ocurred after `setupBrowserNavigationButtons` was called.', previousURL);
+      return this.router.transitionTo(previousURL);
     },
     goForward() {
-      const nextPage = this.forward.pop();
-      assert('backButton must be used atleast one time before forwardButton could be used..', nextPage);
-      return this.router.transitionTo(nextPage);
+      const nextURL = this.forward.pop();
+      assert('backButton must be used at least once before forwardButton can be used.', nextURL);
+      return this.router.transitionTo(nextURL);
     },
     router
   });
   owner.register('service:history', history, { instantiate: false });
-  addObserver(router, 'currentRouteName', history, 'addHistory');
+  addObserver(router, 'currentURL', history, 'addHistory');
 };
 
 export {

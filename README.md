@@ -28,8 +28,6 @@ There is an usage example [in this acceptance test](https://github.com/jelhan/em
 Known limitations
 ------------------------------------------------------------------------------
 
-Query params are not supported yet.
-
 Support for old-style acceptance tests (before RFC #232 and #268) was dropped in `v0.1.0`. You could use `v0.0.5` if you need to support them, but this one does not support Ember 3.x.
 
 
