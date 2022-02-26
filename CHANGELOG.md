@@ -1,3 +1,4 @@
+# Changelog
 
 ## v0.3.0 (2022-02-26)
 
@@ -20,5 +21,3 @@
 #### Committers: 2
 - Gabor Babicz ([@zeppelin](https://github.com/zeppelin))
 - Jeldrik Hanschke ([@jelhan](https://github.com/jelhan))
-
-# Changelog
