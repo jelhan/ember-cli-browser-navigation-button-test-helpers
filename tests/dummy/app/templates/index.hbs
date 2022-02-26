@@ -1,4 +1,4 @@
-{{#link-to "foo" class="foo"}}go to foo{{/link-to}}
-{{#link-to "uses-loading-substate" class="uses-loading-substate"}}go to route which uses a loading substate{{/link-to}}
-{{#link-to "dynamic" "item-id" class="uses-dynamic-segment"}}go to route which uses a dynamic segment{{/link-to}}
-{{#link-to "dynamic" "yet-another-item-id" (query-params a=1 b=2 c=3) class="uses-query-params"}}go to route which uses query string parameters{{/link-to}}
+<LinkTo @route="foo" class="foo">go to foo</LinkTo>
+<LinkTo @route="uses-loading-substate" class="uses-loading-substate">go to route which uses a loading substate</LinkTo>
+<LinkTo @route="dynamic" @model="item-id" class="uses-dynamic-segment">go to route which uses a dynamic segment</LinkTo>
+<LinkTo @route="dynamic" @model="yet-another-item-id" @query={{hash a=1 b=2 c=3}} class="uses-query-params">go to route which uses query string parameters</LinkTo>

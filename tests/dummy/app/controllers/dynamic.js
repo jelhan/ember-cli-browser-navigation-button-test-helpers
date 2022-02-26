@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  queryParams: ['a', 'b', 'c']
-});
+export default class DynamicController extends Controller {
+  queryParams = ['a', 'b', 'c'];
+}

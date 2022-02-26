@@ -2,16 +2,20 @@ import {
   click,
   currentURL,
   currentRouteName,
-  visit
+  visit,
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { setupBrowserNavigationButtons, backButton, forwardButton } from 'ember-cli-browser-navigation-button-test-helper/test-support';
+import {
+  setupBrowserNavigationButtons,
+  backButton,
+  forwardButton,
+} from 'ember-cli-browser-navigation-button-test-helper/test-support';
 
-module('Acceptance | test helpers', function(hooks) {
+module('Acceptance | test helpers', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('usage', async function(assert) {
+  test('usage', async function (assert) {
     setupBrowserNavigationButtons();
 
     await visit('/');
@@ -37,10 +41,14 @@ module('Acceptance | test helpers', function(hooks) {
 
     await forwardButton();
     assert.equal(currentURL(), '/bar', 'url after another forward button');
-    assert.equal(currentRouteName(), 'bar', 'path after another forward button');
+    assert.equal(
+      currentRouteName(),
+      'bar',
+      'path after another forward button'
+    );
   });
 
-  test('handles route substates', async function(assert) {
+  test('handles route substates', async function (assert) {
     setupBrowserNavigationButtons();
 
     await visit('/');
@@ -51,7 +59,7 @@ module('Acceptance | test helpers', function(hooks) {
     assert.equal(currentRouteName(), 'index');
   });
 
-  test('handles dynamic segments', async function(assert) {
+  test('handles dynamic segments', async function (assert) {
     setupBrowserNavigationButtons();
 
     await visit('/');
@@ -72,7 +80,7 @@ module('Acceptance | test helpers', function(hooks) {
     assert.equal(currentRouteName(), 'dynamic');
   });
 
-  test('handle query string parameters', async function(assert) {
+  test('handle query string parameters', async function (assert) {
     setupBrowserNavigationButtons();
 
     await visit('/');
